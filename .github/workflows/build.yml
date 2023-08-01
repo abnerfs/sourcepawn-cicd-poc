@@ -35,11 +35,12 @@ jobs:
             cd ${{ env.PLUGIN }}
             mkdir -p include
             mkdir -p ../plugins
+            cp -r include ${{ env.SOURCEMOD }}
 
         - name: Build plugin
           run: |        
               cd ${{ env.PLUGIN }}
-              ${{ env.SOURCEMOD }}/spcomp64 ./hello-world.sp -o ../plugins/hello-world.smx -i ./include
+              ${{ env.SOURCEMOD }}/spcomp64 ./hello-world.sp -o ../plugins/hello-world.smx -i ${{ env.SOURCEMOD }}/include
 
         - name: Commit file
           uses: stefanzweifel/git-auto-commit-action@v4
