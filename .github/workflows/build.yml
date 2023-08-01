@@ -8,6 +8,9 @@ on:
 jobs:
     build:
       runs-on: [ubuntu-latest]
+      permissions:
+        contents: write
+
       env:
           SOURCEMOD_URL: https://sm.alliedmods.net/smdrop/1.11/sourcemod-1.11.0-git6936-linux.tar.gz
           SOURCEMOD: $GITHUB_WORKSPACE/../sourcemod/addons/sourcemod/scripting
