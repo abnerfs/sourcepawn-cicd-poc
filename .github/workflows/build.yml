@@ -10,7 +10,7 @@ jobs:
       runs-on: [ubuntu-latest]
       env:
           SOURCEMOD_URL: https://sm.alliedmods.net/smdrop/1.11/sourcemod-1.11.0-git6936-linux.tar.gz
-          SOURCEMOD: $GITHUB_WORKSPACE/sourcemod/addons/sourcemod/scripting
+          SOURCEMOD: $GITHUB_WORKSPACE/../sourcemod/addons/sourcemod/scripting
           PLUGIN: $GITHUB_WORKSPACE/addons/sourcemod/scripting
 
       steps:
@@ -22,6 +22,7 @@ jobs:
           run: |
             sudo apt update
             sudo apt install rsync -y
+            cd ..
             mkdir sourcemod
             cd sourcemod
             wget -O sourcemod.tar.gz ${{ env.SOURCEMOD_URL }}
@@ -38,3 +39,11 @@ jobs:
           run: |        
               cd ${{ env.PLUGIN }}
               ${{ env.SOURCEMOD }}/spcomp64 ./hello-world.sp -o ../plugins/hello-world.smx -i ./include
+
+        - name: Commit file
+          uses: stefanzweifel/git-auto-commit-action@v4
+          with:
+            commit_message: Auto build smx file
+            skip_checkout: true
+            skip_fetch: true
+
