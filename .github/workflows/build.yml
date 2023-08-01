@@ -17,14 +17,13 @@ jobs:
           PLUGIN: $GITHUB_WORKSPACE/addons/sourcemod/scripting
 
       steps:
-        - uses: actions/checkout@v2
-          with: 
+        - uses: actions/checkout@v3
+          with:
+            ref: ${{ github.head_ref }}
             submodules: true
 
         - name: Download sourcemod
           run: |
-            sudo apt update
-            sudo apt install rsync -y
             cd ..
             mkdir sourcemod
             cd sourcemod
@@ -36,7 +35,6 @@ jobs:
             cd ${{ env.PLUGIN }}
             mkdir -p include
             mkdir -p ../plugins
-            rsync -a ${{ env.SOURCEMOD }}/include ${{ env.PLUGIN }}/include
 
         - name: Build plugin
           run: |        
@@ -47,6 +45,4 @@ jobs:
           uses: stefanzweifel/git-auto-commit-action@v4
           with:
             commit_message: Auto build smx file
-            skip_checkout: true
-            skip_fetch: true
 
